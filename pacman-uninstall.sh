@@ -9,8 +9,9 @@ kubectl delete -n pacman -f services/pacman-service.yaml
 
 if [[ $# -gt 0  && "$1" == "keeppvc" ]]
 then
-    echo "Keeping namespace and persistent volume claim"
+    echo "Keeping namespace, storage class and persistent volume claim"
 else
     kubectl delete -n pacman -f persistentvolumeclaim/mongo-pvc.yaml
+    kubectl delete -f storageclass/mongo-sc.yaml
     kubectl delete namespace pacman
 fi

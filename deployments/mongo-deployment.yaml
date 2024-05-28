@@ -4,8 +4,6 @@ metadata:
   labels:
     name: mongo
   name: mongo
-  annotations:
-    source: "https://github.com/saintdle/pacman-tanzu"
 spec:
   replicas: 1
   selector:
@@ -34,15 +32,15 @@ spec:
         terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /bitnami/mongodb
-          name: mongo-db
+          name: mongodb-pv
       restartPolicy: Always
-      schedulerName: default-scheduler
+      schedulerName: stork
       securityContext:
         fsGroup: 1001
       serviceAccountName: default
       terminationGracePeriodSeconds: 30
       volumes:
-      - name: mongo-db
+      - name: mongodb-pv
         persistentVolumeClaim:
           claimName: mongo-storage
       containers:
@@ -81,5 +79,5 @@ spec:
         - name: mongo
           containerPort: 27017
         volumeMounts:
-          - name: mongo-db
+          - name: mongodb-pv
             mountPath: /bitnami/mongodb/
